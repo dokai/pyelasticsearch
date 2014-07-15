@@ -130,9 +130,7 @@ class ElasticSearch(object):
 
     def _concat(self, items):
         """
-        Return a comma-delimited concatenation of the elements of ``items``,
-        with any occurrences of "_all" omitted.
-
+        Return a comma-delimited concatenation of the elements of ``items``.
         If ``items`` is a string, promote it to a 1-item list.
         """
         # TODO: Why strip out _all?
@@ -140,7 +138,7 @@ class ElasticSearch(object):
             return ''
         if isinstance(items, string_types):
             items = [items]
-        return ','.join(i for i in items if i != '_all')
+        return ','.join(i for i in items)
 
     def _to_query(self, obj):
         """
@@ -355,7 +353,7 @@ class ElasticSearch(object):
             representing documents to index
         :arg id_field: The field of each document that holds its ID
         :arg parent_field: The field of each document that holds its parent ID,
-            if any. Removed from document before indexing. 
+            if any. Removed from document before indexing.
 
         See `ES's bulk API`_ for more detail.
 
@@ -981,7 +979,7 @@ class ElasticSearch(object):
             http://www.elasticsearch.org/guide/reference/api/percolate/
         """
         return self.send_request('GET',
-                                 [index, doc_type, '_percolate'], 
+                                 [index, doc_type, '_percolate'],
                                  doc, query_params=query_params)
 
 
